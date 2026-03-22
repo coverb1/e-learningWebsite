@@ -1,5 +1,5 @@
 import React from 'react'
-import { Route, Routes } from 'react-router-dom'
+import { Route, Routes, useMatch } from 'react-router-dom'
 import Home from './pages/students/Home'
 import CourseList from './pages/students/CourseList'
 import CourseDetails from './pages/students/CourseDetails'
@@ -11,11 +11,19 @@ import Dashboard from './pages/educator/Dashboard'
 import AddCourse from './pages/educator/AddCourse'
 import Mycourse from './pages/educator/Mycourse'
 import StudentsEnrolled from './pages/educator/StudentsEnrolled'
+import Navbar from './components/student/Navbar'
 
 
 const App = () => {
+
+  //Is the current URL inside /educator?
+  //Is this URL part of /educator routes?
+const isEducatorRouter=useMatch('/educator/*')
+
   return (
-    <div>
+    <div className='text-default min-h-screen bg-white'>
+      {/* means if no educator url found show him navbar */}
+{!isEducatorRouter&& <Navbar />}
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/course-list' element={<CourseList />} />
@@ -26,11 +34,11 @@ const App = () => {
         <Route path='/player/:courseId' element={<Player />} />
         <Route path='/loading/:path' element={<Loading />} />
 
-        <Route path='/educator' element={<Educator/>}>
-            <Route path='educator' element={<Dashboard/>} />
-            <Route path='add-course' element={<AddCourse/>} />
-            <Route path='my-courses' element={<Mycourse/>} />
-            <Route path='student-enrlled' element={<StudentsEnrolled/>} />
+        <Route path='/educator' element={<Educator />}>
+          <Route path='educator' element={<Dashboard />} />
+          <Route path='add-course' element={<AddCourse />} />
+          <Route path='my-courses' element={<Mycourse />} />
+          <Route path='student-enrlled' element={<StudentsEnrolled />} />
         </Route>
 
       </Routes>
