@@ -1,17 +1,28 @@
-import { createContext } from "react";
+import { createContext, useState } from "react";
+import { dummyCourses } from "../assets/assets";
 
-export const AppContext=createContext()
+export const AppContext = createContext()
 
 
-export const AppContextProvider=(prop)=>{
+export const AppContextProvider = (prop) => {
 
-    const value={
+    const currency = '$'
+    const [allCourses,setAllCourses]=useState([])
 
+    //fetch all courses
+
+    const fetchAllCourses=async()=>{
+        setAllCourses(dummyCourses)
     }
 
-return(
-    <AppContext.Provider value={value}>
-        {prop.children}
-    </AppContext.Provider>
-)
+    const value = {
+        currency,
+        allCourses
+    }
+
+    return (
+        <AppContext.Provider value={value}>
+            {prop.children}
+        </AppContext.Provider>
+    )
 }
