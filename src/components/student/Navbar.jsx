@@ -6,7 +6,7 @@ import { AppContext } from '../../context/Appcontext'
 
 const Navbar = () => {
 
-  const {navigate}=useContext(AppContext)
+  const {navigate,isEducator,setIsEducator}=useContext(AppContext)
 
   const{openSignIn}=useClerk()
   const {user}=useUser()
@@ -24,7 +24,7 @@ const Navbar = () => {
 
          { user && 
          <>
-          <button>Become Educator </button>
+          <button>{isEducator ? "Educator Dashboard" : "Become Educator"}</button>
           <Link to='/my-enrlloment'>|| My-enrlloment</Link>
           </>
           }

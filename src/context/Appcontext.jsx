@@ -9,6 +9,7 @@ export const AppContextProvider = (prop) => {
 
     const currency = '$'
     const [allCourses, setAllCourses] = useState([])
+     const [isEducator, setIsEducator] = useState(true)
     const navigate=useNavigate()
 
     //fetch all courses
@@ -32,6 +33,7 @@ const calculateRating=(course)=>{
     course.courseRatings.forEach(rating=>{
         totalRating+=rating.rating
     })
+    return totalRating / course.courseRatings.length //this calculates average rating
 }
 
     useEffect(() => {
@@ -42,7 +44,10 @@ const calculateRating=(course)=>{
     const value = {
         currency,
         allCourses,
-        navigate
+        navigate,
+        calculateRating,
+        isEducator,
+        setIsEducator
     }
 
     return (
