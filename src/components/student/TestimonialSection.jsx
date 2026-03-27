@@ -16,10 +16,10 @@ const TestimonialSection = () => {
       </p>
 
       {/* Container */}
-      <div className='text-sm text-left border border-gray-500/30 pb-6 rounded-lg bg-white  overflow-hidden mt-10'>
+      <div className='text-sm text-left border px-16  pb-8 rounded-lg   overflow-hidden mt-10'>
         
         {/* GRID FIXED HERE */}
-        <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 p-6'>
+        <div className='grid grid-cols-1 sm:grid-cols-2  lg:grid-cols-3 gap-8 p-6'>
           
           {dummyTestimonial.map((testimonial, index) => (
             
@@ -61,15 +61,14 @@ const TestimonialSection = () => {
                 </div>
 
                 {/* Feedback */}
-                <p className='text-gray-400 mt-5'>
+                <p className='text-gray-400 mt-5 pb-5'>
                   {testimonial.feedback}
                 </p>
-
+                <a href="#" className='text-blue-500 underline px-5 w-fit '>reade more</a>
               </div>
+              
             </div>
-
           ))}
-
         </div>
       </div>
     </div>
