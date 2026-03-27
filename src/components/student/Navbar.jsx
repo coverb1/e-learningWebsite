@@ -21,16 +21,19 @@ const Navbar = () => {
 
       <div className='hidden md:flex items-center gap-5 text-gray-500'>
         <div>
-
+{/* IF user exists (logged in)  show this content */}
+{/* Show educator button and enrollment link ONLY when user is logged in */}
          { user && 
          <>
-          <button>{isEducator ? "Educator Dashboard" : "Become Educator"}</button>
+          <button onClick={()=>{navigate('/educator')}}>{isEducator ? "Educator Dashboard" : "Become Educator"}</button>
           <Link to='/my-enrlloment'>|| My-enrlloment</Link>
           </>
           }
         </div>
         
        {
+// IF user exists → show <UserButton />
+// ELSE → show "Create Account" button
         user? <UserButton/> :
         <button onClick={()=>openSignIn()} 
         className='bg-blue-600 text-white px-5 py-2 rounded-full'>Create Account</button>}
@@ -39,7 +42,7 @@ const Navbar = () => {
       {/* for phone screens */}
       <div className='md:hidden flex items-center gap-2 sm:gap-5 text-gray-400'>
         <div>
-    <button>Become Educator </button>
+   <button onClick={()=>{navigate('/educator')}}>{isEducator ? "Educator Dashboard" : "Become Educator"}</button>
     <Link to='/my-enrlloment'>|| My-enrlloment</Link>
         </div>
         <button><img src={assets.user_icon} alt="" /></button>

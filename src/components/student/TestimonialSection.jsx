@@ -1,8 +1,78 @@
 import React from 'react'
+import { assets, dummyTestimonial } from '../../assets/assets'
 
 const TestimonialSection = () => {
   return (
-    <div>TestimonialSection</div>
+    <div className='pb-14 px-8 md:px-0'>
+      
+      {/* Title */}
+      <h2 className='text-3xl font-medium text-gray-800'>
+        Testimonials
+      </h2>
+
+      <p className='md:text-base text-gray-700 mt-3'>
+        Hear from our learners as they share their journeys of transformation, success, and how
+        <br />the platform has made a difference in their lives
+      </p>
+
+      {/* Container */}
+      <div className='text-sm text-left border border-gray-500/30 pb-6 rounded-lg bg-white  overflow-hidden mt-10'>
+        
+        {/* GRID FIXED HERE */}
+        <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 p-6'>
+          
+          {dummyTestimonial.map((testimonial, index) => (
+            
+            <div key={index} className='border border-gray-200 rounded-lg overflow-hidden'>
+              
+              {/* Header */}
+              <div className='flex items-center gap-4 bg-gray-500/10 p-4'>
+                <img
+                  className='h-12 w-12 rounded-full'
+                  src={testimonial.image}
+                  alt=""
+                />
+                <div>
+                  <h1 className='text-lg font-medium text-gray-800'>
+                    {testimonial.name}
+                  </h1>
+                  <p className='text-gray-800/80'>
+                    {testimonial.role}
+                  </p>
+                </div>
+              </div>
+
+              {/* Content */}
+              <div className='p-5 pb-7'>
+                
+                {/* Stars */}
+                <div className='flex gap-0.5'>
+                  {[...Array(5)].map((_, i) => (
+                    <img
+                      key={i}
+                      src={
+                        i < Math.floor(testimonial.rating)
+                          ? assets.star
+                          : assets.star_blank
+                      }
+                      alt=""
+                    />
+                  ))}
+                </div>
+
+                {/* Feedback */}
+                <p className='text-gray-400 mt-5'>
+                  {testimonial.feedback}
+                </p>
+
+              </div>
+            </div>
+
+          ))}
+
+        </div>
+      </div>
+    </div>
   )
 }
 
