@@ -11,6 +11,7 @@ export const AppContextProvider = (prop) => {
     const currency = '$'
     const [allCourses, setAllCourses] = useState([])
      const [isEducator, setIsEducator] = useState(true)
+     const [enrlloledCourse,setEnrlloledCourse]=([])
     const navigate=useNavigate()
 
     //fetch all courses
@@ -70,12 +71,19 @@ course.courseContent.forEach(chapter=>{
 return totalLecture
 }
 
+//fetch user enrlloed courses
+
+const fetchuserEnrlledcourse=async()=>{
+    setEnrlloledCourse(dummyCourses)
+}
+
     useEffect(() => {
         fetchAllCourses()
-      
+      fetchuserEnrlledcourse()
     })
 
     const value = {
+        enrlloledCourse,
         currency,
         allCourses,
         navigate,
@@ -84,7 +92,8 @@ return totalLecture
         setIsEducator,
         calculateNoOfLectures,
         calculateCourseDuration,
-        calculateChapterTime
+        calculateChapterTime,
+        fetchuserEnrlledcourse
     }
 
     return (

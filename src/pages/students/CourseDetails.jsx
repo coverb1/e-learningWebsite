@@ -26,7 +26,7 @@ const CourseDetails = () => {
   // ✅ run when id or courses change
   useEffect(() => {
     fetchCourseData()
-  }, [id, allCourses])
+  }, [id,allCourses])
 
   // ✅ toggle accordion
   // const toggleSection = (index) => {
@@ -168,9 +168,9 @@ const CourseDetails = () => {
                               {/* When user clicks Preview: */}
                               {/* 4. Getting the YouTube video ID */}
                               {lecture.isPreviewFree && (
-                                <span onClick={() => setPlayerData({
+                                <span  onClick={() => setPlayerData({
                                   videoId: lecture.lectureUrl.split('/').pop()
-                                })} className='text-green-600 font-medium'>
+                                })} className='text-green-600 font-medium cursor-pointer '>
                                   Preview
                                 </span>
                               )}
