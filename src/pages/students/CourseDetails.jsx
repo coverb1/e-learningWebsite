@@ -6,119 +6,264 @@ import { assets } from '../../assets/assets'
 import humanizeDuration from 'humanize-duration'
 
 const CourseDetails = () => {
-  //using this Id we will find the particular course from all coursed 
+
   const { id } = useParams()
   const [courseData, setCourseData] = useState(null)
-  const { allCourses } = useContext(AppContext)
+  const [openSections, setOpenSections] = useState({})
 
-  const { calculateRating, calculateChapterTime, calculateCourseDuration, calculateNoOfLectures } = useContext(AppContext)
+  const { allCourses, calculateRating, calculateChapterTime, currency, calculateNoOfLectures, calculateCourseDuration } = useContext(AppContext)
 
-  //function to fetch individual courseData
-
-  const fetchCourseData = async () => {
+  // ✅ fetch course
+  const fetchCourseData = () => {
     const findCourse = allCourses.find(course => course._id === id)
-    console.log(findCourse)
     setCourseData(findCourse)
   }
 
+  // ✅ run when id or courses change
   useEffect(() => {
     fetchCourseData()
   }, [id, allCourses])
 
+  // ✅ toggle accordion
+  // const toggleSection = (index) => {
+  //   setOpenSections((prev) => ({
+  //     ...prev,
+  //     [index]: !prev[index],
+  //   }))
+  // }
 
+  const toggleSection = (index) => {
+    setOpenSections((prev) => {
+      let newState = { ...prev }
+
+      if (newState[index] === true) {
+        newState[index] = false
+      } else {
+        newState[index] = true
+      }
+
+      return newState
+    })
+  }
 
   return courseData ? (
-    <>
-      <div className='flex md:flex-row flex-col-reverse gap-10 relative items-start justify-between md:px-36
-    px-8 md:pt-30 pt-20 text-left'>
+    <div className='flex md:flex-row flex-col-reverse gap-10 relative items-start justify-between md:px-36 px-8 md:pt-30 pt-20 text-left'>
 
-        <div className='absolute top-0 left-0  h-section-height w-full -z-1 bg-gradient-to-b from-cyan-100/70'>
+      {/* background */}
+      <div className='absolute top-0 left-0 h-section-height w-full -z-10 bg-gradient-to-b from-cyan-100/70'></div>
 
-        </div>
+      {/* LEFT COLUMN */}
+      <div className='max-w-xl text-gray-500 z-10'>
 
-        {/* left column */}
-        <div className='max-w-xl text-gray-500 z-10'>
-          <h1 className="text-2xl md:text-4xl font-bold text-gray-800 leading-tight">
-            {courseData.courseTitle}
-          </h1>
-          <p className='pt-4 md:text-base text-sm' dangerouslySetInnerHTML={{ __html: courseData.courseDescription.slice(0, 200) }}></p>
+        {/* title */}
+        <h1 className="text-2xl md:text-4xl font-bold text-gray-800 leading-tight">
+          {courseData.courseTitle}
+        </h1>
 
-          {/* reveiw rating */}
+        {/* description */}
+        <p
+          className='pt-4 md:text-base text-sm'
+          dangerouslySetInnerHTML={{
+            __html: courseData.courseDescription.slice(0, 200)
+          }}
+        ></p>
 
-          <div className='flex items-center space-x-2 pt-3 pb-1 text-sm'>
-            <span className='font-medium'>{calculateRating(courseData)}</span>
-            <div className='flex'>
-              {[...Array(5)].map((_, i) => (
-                <img key={i} className='w-3.5 h-3.5' src={i < Math.floor(calculateRating(courseData)) ? assets.star : assets.star_blank} alt='' />
-              ))}
-            </div>
-            <p className='text-blue-600'>({courseData.courseRatings.length}{courseData.courseRatings.length > 1 ? 'Ratings' : 'Rating'})</p>
-            <p>{courseData.enrolledStudents.length}{courseData.enrolledStudents.length > 1 ? 'students' : 'student'}</p>
+        {/* rating */}
+        <div className='flex items-center space-x-2 pt-3 pb-1 text-sm'>
+          <span className='font-medium'>{calculateRating(courseData)}</span>
+
+          <div className='flex'>
+            {[...Array(5)].map((_, i) => (
+              <img
+                key={i}
+                className='w-3.5 h-3.5'
+                src={i < Math.floor(calculateRating(courseData)) ? assets.star : assets.star_blank}
+                alt=''
+              />
+            ))}
           </div>
-          <p>course by  <span className='text-blue-600 underline   '>Mucyo bruce</span></p>
-          <div className='pt-8 text-gray-800'>
-            <h2 className='text-xl font-semibold'>Course Structure</h2>
-            <div className='pt-5'>
-              {courseData.courseContent.map((chapter, index) => (
-                <div className='border border-gray-300 bg-white mb-2 rounded' key={index}>
-                  <div className='flex items-center justify-between px-4 py-3 cursor-pointer select-none'>
-                    <div className='flex items-center gap-2'>
-                      <img src={assets.down_arrow_icon} alt="" />
-                      <p className='font-medium md:text-base text-sm'>{chapter.chapterTitle}</p>
-                    </div>
-                    <p className='text-sm md:text-default'>{chapter.chapterContent.length}Lecture-{calculateChapterTime(chapter)}</p>
-                  </div>
 
-                <div className='overflow-hidden transition-all duration-300 max-h-96'>
-  <ul className='divide-y divide-gray-200'>
-    {chapter.chapterContent.map((lecture, index) => (
-      <li key={index} className='flex items-start gap-3 py-3 px-4 hover:bg-gray-50 transition'>
-
-        {/* icon */}
-        <img 
-          src={assets.play_icon} 
-          className='w-4 h-4 mt-1 flex-shrink-0' 
-          alt="" 
-        />
-
-        {/* content */}
-        <div className='flex-1'>
-          <p className='text-sm md:text-base font-medium text-gray-800'>
-            {lecture.lectureTitle}
+          <p className='text-blue-600'>
+            ({courseData.courseRatings.length}{' '}
+            {courseData.courseRatings.length > 1 ? 'Ratings' : 'Rating'})
           </p>
 
-          <div className='flex items-center gap-3 text-xs text-gray-500 mt-1'>
-
-            {/* preview */}
-            {lecture.isPreviewFree && (
-              <span className='text-green-600 font-medium'>
-                Preview
-              </span>
-            )}
-
-            {/* duration */}
-            <span>
-              {humanizeDuration(lecture.lectureDuration * 60 * 1000, {
-                units: ['h', 'm']
-              })}
-            </span>
-
-          </div>
+          <p>
+            {courseData.enrolledStudents.length}{' '}
+            {courseData.enrolledStudents.length > 1 ? 'students' : 'student'}
+          </p>
         </div>
 
-      </li>
-    ))}
-  </ul>
-</div>
+        <p>
+          course by <span className='text-blue-600 underline'>Mucyo Bruce</span>
+        </p>
 
+        {/* COURSE STRUCTURE */}
+        <div className='pt-8 text-gray-800'>
+          <h2 className='text-xl font-semibold'>Course Structure</h2>
+
+          <div className='pt-5'>
+            {courseData.courseContent.map((chapter, index) => (
+
+              <div
+                key={index}
+                className='border border-gray-300 bg-white mb-2 rounded'
+              >
+
+                {/* header */}
+                <div
+                  onClick={() => toggleSection(index)}
+                  className='flex items-center justify-between px-4 py-3 cursor-pointer select-none'
+                >
+                  <div className='flex items-center gap-2'>
+                    <img
+                      src={assets.down_arrow_icon}
+                      className={`transition-transform ${openSections[index] ? 'rotate-180' : ''}`}
+                      alt=""
+                    />
+                    <p className='font-medium md:text-base text-sm'>
+                      {chapter.chapterTitle}
+                    </p>
+                  </div>
+
+                  <p className='text-sm'>
+                    {chapter.chapterContent.length} Lectures -{' '}
+                    {calculateChapterTime(chapter)}
+                  </p>
                 </div>
-              ))}
-            </div>
+
+                {/* content */}
+                <div
+                  className={`overflow-hidden transition-all duration-300 ${openSections[index] ? 'max-h-96' : 'max-h-0'
+                    }`}
+                >
+                  <ul className='divide-y divide-gray-200'>
+
+                    {chapter.chapterContent.map((lecture, i) => (
+                      <li
+                        key={i}
+                        className='flex items-start gap-3 py-3 px-4 hover:bg-gray-50 transition'
+                      >
+
+                        {/* icon */}
+                        <img
+                          src={assets.play_icon}
+                          className='w-4 h-4 mt-1'
+                          alt=""
+                        />
+
+                        {/* content */}
+                        <div className='flex-1'>
+                          <p className='text-sm md:text-base font-medium text-gray-800'>
+                            {lecture.lectureTitle}
+                          </p>
+
+                          <div className='flex items-center gap-3 text-xs text-gray-500 mt-1'>
+
+                            {lecture.isPreviewFree && (
+                              <span className='text-green-600 font-medium'>
+                                Preview
+                              </span>
+                            )}
+
+                            <span>
+                              {humanizeDuration(
+                                lecture.lectureDuration * 60 * 1000,
+                                { units: ['h', 'm'] }
+                              )}
+                            </span>
+
+                          </div>
+                        </div>
+
+                      </li>
+                    ))}
+
+                  </ul>
+                </div>
+
+              </div>
+            ))}
           </div>
         </div>
-        {/* right column */}
+
+        <div className='py-10 px-4 md:px-8 bg-white rounded-xl shadow-sm border border-gray-100'>
+
+          <h3 className='text-2xl font-semibold text-gray-800 mb-4'>
+            Course Description
+          </h3>
+
+          <div
+            className='prose prose-sm md:prose-base max-w-none text-gray-600 leading-relaxed'
+            dangerouslySetInnerHTML={{
+              __html: courseData.courseDescription
+            }}
+          ></div>
+
+        </div>
+
       </div>
-    </>
+
+      {/* RIGHT COLUMN (you can add video / price later) */}
+      <div className="bg-white rounded-2xl shadow-md overflow-hidden w-80">
+
+        {/* Image */}
+        <img
+          src={courseData.courseThumbnail}
+          alt=""
+          className="w-full h-48 object-cover"
+        />
+
+        {/* Content */}
+        <div className="p-4">
+
+          <div className="flex items-center gap-2 bg-red-50 p-2 rounded-lg w-fit">
+            <img
+              className="w-4 h-4"
+              src={assets.time_left_clock_icon}
+              alt=""
+            />
+
+            <p className="text-red-500 text-sm"><span className="font-semibold">5 days</span> left at this price</p>
+          </div>
+
+          <div className='flex gap-3 items-center pt-2'>
+            <p className='text-gray-800 md:text-4xl text-2xl font-semibold'>{currency}{(courseData.coursePrice - courseData.discount * courseData.coursePrice / 100).toFixed(2)}</p>
+            <p className='md:text-ld text-gray-500 line-through'>{currency}{courseData.coursePrice}</p>
+            <p className='md:text-lg text-gray-500'>{courseData.discount}%off</p>
+          </div>
+
+          <div className='flex items-center text-sm md:text-default gap-4 pt-2 md:pt-4 text-gray-500
+'>
+            <div className='flex items-center gap-1'>
+              <img src={assets.star} alt="" />
+              <p>{calculateRating(courseData)}</p>
+            </div>
+
+            <div className='h-4 w-px bg-gray-500/40'>
+
+            </div>
+
+            <div className='flex items-center gap-1'>
+              <img src={assets.time_clock_icon} alt="" />
+              <p>{calculateCourseDuration(courseData)}</p>
+            </div>
+
+            <div className='h-4 w-px bg-gray-500/40'>
+
+            </div>
+
+            <div className='flex items-center gap-1'>
+              <img src={assets.time_clock_icon} alt="" />
+              <p>{calculateNoOfLectures(courseData)} lessons</p>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+
+    </div>
 
   ) : <Loading />
 }
