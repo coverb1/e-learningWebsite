@@ -55,7 +55,7 @@ const calculateCourseDuration = (course) => {
     });
   });
 
-  return humanizeDuration(time * 60 * 100, { units: ['h', 'm'] });
+  return humanizeDuration(time * 60 * 1000, { units: ['h', 'm'] });
 };
 
 //function of total lectures in the course
