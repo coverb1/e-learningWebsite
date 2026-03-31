@@ -3,8 +3,23 @@ import { AppContext } from '../../context/Appcontext'
 
 const Myenrlloment = () => {
 
-  const { enrlloledCourse ,calculateCourseDuration} = useContext(AppContext)
-  const [progressArray,setProgressArray]=useState([])
+  const { enrlloledCourse, calculateCourseDuration } = useContext(AppContext)
+  const [progressArray, setProgressArray] = useState([
+    { lectureCompleted: 2, totalLecturers: 4 },
+    { lectureCompleted: 1, totalLecturers: 5 },
+    { lectureCompleted: 3, totalLecturers: 6 },
+    { lectureCompleted: 4, totalLecturers: 4 },
+    { lectureCompleted: 0, totalLecturers: 3 },
+    { lectureCompleted: 5, totalLecturers: 7 },
+    { lectureCompleted: 6, totalLecturers: 8 },
+    { lectureCompleted: 2, totalLecturers: 6 },
+    { lectureCompleted: 4, totalLecturers: 10 },
+    { lectureCompleted: 3, totalLecturers: 5 },
+    { lectureCompleted: 7, totalLecturers: 7 },
+    { lectureCompleted: 1, totalLecturers: 4 },
+    { lectureCompleted: 0, totalLecturers: 2 },
+    { lectureCompleted: 5, totalLecturers: 7 }
+  ])
 
   return (
     <div className='md:px-36 px-4 pt-10'>
@@ -32,10 +47,11 @@ const Myenrlloment = () => {
                   </div>
                 </td>
                 <td className='px-4 py-3 max-sm:hidden'>
-{calculateCourseDuration(course)}
+                  {calculateCourseDuration(course)}
                 </td>
                 <td className='px-4 max-sm:hidden'>
-                  4/10 <span>Lectures</span>
+                  {progressArray[index]&& `${progressArray[index].lectureCompleted}/
+                  ${progressArray[index].totalLecturers}`} <span>Lectures</span>
                 </td>
                 <td className='px-4 py-3 max-sm:text-right'>
                   <button className='px-3 sm:px-5 py-1.5 sm:py-2 bg-blue-600
