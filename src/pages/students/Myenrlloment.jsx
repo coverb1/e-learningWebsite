@@ -1,9 +1,10 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { AppContext } from '../../context/Appcontext'
 
 const Myenrlloment = () => {
 
-const {enrlloledCourse}=useContext(AppContext)
+  const { enrlloledCourse ,calculateCourseDuration} = useContext(AppContext)
+  const [progressArray,setProgressArray]=useState([])
 
   return (
     <div className='md:px-36 px-4 pt-10'>
@@ -11,7 +12,7 @@ const {enrlloledCourse}=useContext(AppContext)
 
       <div className='overflow-x-auto'>
         <table className='w-full border border-gray-200 rounded-lg overflow-hidden'>
-          
+
           <thead className='bg-gray-100 text-gray-700'>
             <tr>
               <th className='px-6 py-3 text-left text-sm font-semibold'>Course</th>
@@ -21,12 +22,25 @@ const {enrlloledCourse}=useContext(AppContext)
             </tr>
           </thead>
 
-          <tbody className='text-gray-600 text-sm'>
-            {enrlloledCourse.map((course,index)=>(
+          <tbody className='text-gray-700 text-sm'>
+            {enrlloledCourse.map((course, index) => (
               <tr key={index}>
-<td>
-  <img src={course} alt="" />
-</td>
+                <td className='md:px-4 pl-2 md:pl-4 py-3 flex items-center space-x-3'>
+                  <img src={course.courseThumbnail} alt="" className='w-14 sm:w-24 md:w-24' />
+                  <div className='flex-1'>
+                    <p className=' mb-1 max-sm:text-sm'> {course.courseTitle}</p>
+                  </div>
+                </td>
+                <td className='px-4 py-3 max-sm:hidden'>
+{calculateCourseDuration(course)}
+                </td>
+                <td className='px-4 max-sm:hidden'>
+                  4/10 <span>Lectures</span>
+                </td>
+                <td className='px-4 py-3 max-sm:text-right'>
+                  <button className='px-3 sm:px-5 py-1.5 sm:py-2 bg-blue-600
+                  max-sm: text-xs text-white'>On Going</button>
+                </td>
               </tr>
             ))}
           </tbody>

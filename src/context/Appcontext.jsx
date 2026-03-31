@@ -11,7 +11,7 @@ export const AppContextProvider = (prop) => {
     const currency = '$'
     const [allCourses, setAllCourses] = useState([])
      const [isEducator, setIsEducator] = useState(true)
-     const [enrlloledCourse,setEnrlloledCourse]=([])
+     const [enrlloledCourse,setEnrlloledCourse]=useState([])
     const navigate=useNavigate()
 
     //fetch all courses
