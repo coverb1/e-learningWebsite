@@ -1,9 +1,10 @@
 import React, { useContext, useState } from 'react'
 import { AppContext } from '../../context/Appcontext'
+import { Line } from 'rc-progress'
 
 const Myenrlloment = () => {
 
-  const { enrlloledCourse, calculateCourseDuration } = useContext(AppContext)
+  const { enrlloledCourse, calculateCourseDuration, navigate } = useContext(AppContext)
   const [progressArray, setProgressArray] = useState([
     { lectureCompleted: 2, totalLecturers: 4 },
     { lectureCompleted: 1, totalLecturers: 5 },
@@ -44,18 +45,34 @@ const Myenrlloment = () => {
                   <img src={course.courseThumbnail} alt="" className='w-14 sm:w-24 md:w-24' />
                   <div className='flex-1'>
                     <p className=' mb-1 max-sm:text-sm'> {course.courseTitle}</p>
+{/* this is making load depending on what user whached  */}
+{/* if lectureCompleted = 2
+totalLecturers = 4 then (2 * 100) / 4 = 50 */}
+                    <Line strokeColor="#2563eb" trailColor="#e5e7eb" strokeLinecap="round"
+                      strokeWidth={2} percent={progressArray[index] ? (progressArray[index].lectureCompleted * 100)
+                        / progressArray[index].totalLecturers : 0
+                      } className='bg-gray-400 rounded-full'
+                       />
                   </div>
                 </td>
                 <td className='px-4 py-3 max-sm:hidden'>
                   {calculateCourseDuration(course)}
                 </td>
                 <td className='px-4 max-sm:hidden'>
-                  {progressArray[index]&& `${progressArray[index].lectureCompleted}/
+                  {/* this is connecting each progress to its course using index */}
+                  {progressArray[index] && `${progressArray[index].lectureCompleted}/
                   ${progressArray[index].totalLecturers}`} <span>Lectures</span>
                 </td>
                 <td className='px-4 py-3 max-sm:text-right'>
+                  {/* like here we used course.Id becouse one course is represented bouy course where we mapped  and also this course in assets has _id we course._id stands for the courseid   */}
+                  {/* and it will direct us to player couse we have <Route path='/player/:courseId' element={<Player />} /> */}
                   <button className='px-3 sm:px-5 py-1.5 sm:py-2 bg-blue-600
-                  max-sm: text-xs text-white'>On Going</button>
+                  max-sm: text-xs text-white' onClick={() => navigate('/player/' + course._id)}>
+                    {/* gets one course progress [progressArray[index]] */}
+                    {/* 4 / 4 = 1 means completed */}
+                    {progressArray[index] && progressArray[index].lectureCompleted /
+                      progressArray[index].totalLecturers === 1 ? 'completed' : 'onGoing'}
+                  </button>
                 </td>
               </tr>
             ))}
