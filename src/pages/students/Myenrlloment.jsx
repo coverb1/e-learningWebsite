@@ -45,14 +45,14 @@ const Myenrlloment = () => {
                   <img src={course.courseThumbnail} alt="" className='w-14 sm:w-24 md:w-24' />
                   <div className='flex-1'>
                     <p className=' mb-1 max-sm:text-sm'> {course.courseTitle}</p>
-{/* this is making load depending on what user whached  */}
-{/* if lectureCompleted = 2
+                    {/* this is making load depending on what user whached  */}
+                    {/* if lectureCompleted = 2
 totalLecturers = 4 then (2 * 100) / 4 = 50 */}
                     <Line strokeColor="#2563eb" trailColor="#e5e7eb" strokeLinecap="round"
                       strokeWidth={2} percent={progressArray[index] ? (progressArray[index].lectureCompleted * 100)
                         / progressArray[index].totalLecturers : 0
                       } className='bg-gray-400 rounded-full'
-                       />
+                    />
                   </div>
                 </td>
                 <td className='px-4 py-3 max-sm:hidden'>

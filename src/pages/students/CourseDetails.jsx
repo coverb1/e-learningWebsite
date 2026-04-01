@@ -167,6 +167,8 @@ const CourseDetails = () => {
 
                               {/* When user clicks Preview: */}
                               {/* 4. Getting the YouTube video ID */}
+                              {/* Show Preview button ONLY if lecture is FREE */}
+                              {/* Only allow user to watch FREE lectures */}
                               {lecture.isPreviewFree && (
                                 <span onClick={() => setPlayerData({
                                   videoId: lecture.lectureUrl.split('/').pop()
