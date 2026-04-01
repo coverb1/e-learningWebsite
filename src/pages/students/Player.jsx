@@ -3,6 +3,8 @@ import { AppContext } from '../../context/Appcontext'
 import { assets } from '../../assets/assets'
 import humanizeDuration from 'humanize-duration'
 import { useParams } from 'react-router-dom'
+import YouTube from 'react-youtube'
+import Footer from '../../components/student/Footer'
 
 const Player = () => {
 
@@ -37,25 +39,15 @@ const Player = () => {
 
   useEffect(() => {
     fetchCourseData()
-  })
-
-  // we could also use map
-
-  // const getCourseData=()=>{
-  //   enrlloledCourse.map((course)=>{
-  //     if (course._id===courseId) {
-  //       setCourseData(cou)
-  //     }
-  //   })
-  // }
+  }, [enrlloledCourse])
 
   return (
     <>
-      <div className='p-4 sm:p-10 flex flex-col-reverse md:grid-cols-2 gap-10 md:px-36'>
-        {/* leftside */}
-        <div >
-          <h2 className='text-xl font-semibold'> Course Structure</h2>
+      <div className='p-4 sm:p-10 flex flex-col md:flex-row gap-10 md:px-36'>
 
+        {/* leftside */}
+        <div className='w-full md:w-2/3'>
+          <h2 className='text-xl font-semibold'> Course Structure</h2>
 
           <div className='pt-5'>
             {courseData && courseData.courseContent.map((chapter, index) => (
@@ -115,12 +107,12 @@ const Player = () => {
 
                           <div className='flex items-center gap-3 text-xs text-gray-500 mt-1'>
 
-                          {/* Show Watch button if video exists */}
+                            {/* Show Watch button if video exists */}
                             {lecture.lectureUrl && (
                               <span onClick={() => setPlayerData(
                                 {
                                   // Take ALL data from lecture and copy it
-                                  
+
                                   ...lecture, chapter: index + 1, lecture: i + 1
                                 }
                               )} className='text-green-600 font-medium cursor-pointer '>
@@ -147,13 +139,33 @@ const Player = () => {
               </div>
             ))}
           </div>
+ 
+ <div className='flex items-center gap-2 py-3 mt-10'>
+  <h1 className='text-xl font-bold'>Rating this course</h1>
+ </div>
+
         </div>
 
         {/* Right side */}
-        <div>
-
+        <div className='w-full md:w-1/3 md:mt-10'>
+        {
+          playerData ? (
+            <div>
+              {/* cut into many parts then pop so take the last part */}
+               <YouTube videoId={playerData.lectureUrl.split('/').pop()} iframeClassName='w-full aspect-video' />
+               <div className='flex justify-between items-center mt-1'>
+                <p>{playerData.chapter} . {playerData.lecture} {playerData.lectureTitle}</p>
+                <button className='text-blue-600'>{false ?'completed':'Mark completed'}</button>
+               </div>
+            </div>
+          )
+          : <img  src={courseData ? courseData.courseThumbnail : ''} alt="" />
+        }
+         
         </div>
+
       </div>
+      <Footer/>
     </>
   )
 }
