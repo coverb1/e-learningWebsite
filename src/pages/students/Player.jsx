@@ -5,7 +5,7 @@ import humanizeDuration from 'humanize-duration'
 import { useParams } from 'react-router-dom'
 import YouTube from 'react-youtube'
 import Footer from '../../components/student/Footer'
-import { Rating } from 'react-simple-star-rating'
+import Rating from '../../components/student/Rating'
 
 const Player = () => {
 
@@ -143,7 +143,8 @@ const Player = () => {
  
  <div className='flex flex-row items-center gap-2 py-3 mt-10'>
   <h1 className='text-xl font-bold'>Rating this course</h1>
-  <Rating initialValue={0}/>
+  <Rating initialRating={0}/>
+
  </div>
 
         </div>
