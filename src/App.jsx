@@ -38,7 +38,7 @@ const isEducatorRouter=useMatch('/educator/*')
           <Route path='educator' element={<Dashboard />} />
           <Route path='add-course' element={<AddCourse />} />
           <Route path='my-courses' element={<Mycourse />} />
-          <Route path='student-enrlled' element={<StudentsEnrolled />} />
+          <Route path='student-enrolled' element={<StudentsEnrolled />} />
         </Route>
 
       </Routes>
