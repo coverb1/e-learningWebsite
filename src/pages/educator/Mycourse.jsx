@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { AppContext } from '../../context/Appcontext'
+import Loading from '../../components/student/Loading'
 
 const Mycourse = () => {
 
@@ -63,9 +64,8 @@ const Mycourse = () => {
                   {/* Earnings */}
                   <td className='px-6 py-4 font-semibold text-green-600'>
                     {currency}
-                    {Math.floor(course.enrolledStudents.length * (course.coursePrice / 100))}
+                    {Math.floor(course.enrolledStudents.length * (course.coursePrice - course.discount * course.coursePrice/ 100))}
                   </td>
-
                   {/* Students */}
                   <td className='px-6 py-4'>
                     {course.enrolledStudents.length}
@@ -90,7 +90,7 @@ const Mycourse = () => {
     </div>
   ) : (
     <div className='flex items-center justify-center h-screen text-gray-500'>
-      Loading...
+     <Loading/>
     </div>
   )
 }
