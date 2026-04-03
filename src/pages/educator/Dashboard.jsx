@@ -77,7 +77,8 @@ const Dashboard = () => {
                   <tr key={index} className='border-b border-gray-100 hover:bg-gray-50'>
 
                     <td className='px-4 py-3'>
-                      {index + 1}
+                      {/* this is used to show the numbers ,1,2,3 */}
+                      {index + 1}  
                     </td>
 
                     <td className='px-4 py-3 flex items-center gap-3'>
