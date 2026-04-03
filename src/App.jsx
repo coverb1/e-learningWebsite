@@ -25,17 +25,25 @@ const isEducatorRouter=useMatch('/educator/*')
       {/* means if no educator url found show him navbar */}
 {!isEducatorRouter&& <Navbar />}
       <Routes>
+        {/* when user open show HOme */}
         <Route path='/' element={<Home />} />
+        {/* Route for all courses  */}
         <Route path='/course-list' element={<CourseList />} />
-        {/* <Route path='/course-list' element={<CourseList />} /> */}
+     {/* route for seacrhing */}
         <Route path='/course-list/:input' element={<CourseList />} />
+        {/* this will show all course details */}
         <Route path='/course/:id' element={<CourseDetails />} />
+        {/* courses the user joined */}
         <Route path='/my-enrlloment' element={<Myenrlloment />} />
+        {/* route that helps to show video user clicked */}
         <Route path='/player/:courseId' element={<Player />} />
+        {/* route for loading */}
         <Route path='/loading/:path' element={<Loading />} />
 
+{/* This is a main layout page */}
+{/* <Outlet /> is a space where child pages appear */}
         <Route path='/educator' element={<Educator />}>
-          <Route path='educator' element={<Dashboard />} />
+          <Route path='/educator' element={<Dashboard />} />
           <Route path='add-course' element={<AddCourse />} />
           <Route path='my-courses' element={<Mycourse />} />
           <Route path='student-enrolled' element={<StudentsEnrolled />} />
