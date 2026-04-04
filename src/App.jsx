@@ -18,18 +18,21 @@ const App = () => {
 
   //Is the current URL inside /educator?
   //Is this URL part of /educator routes?
-const isEducatorRouter=useMatch('/educator/*')
+  // useMatch is a React Router hook.
+  // It helps you check the current URL.
+  // “Check if the current page URL starts with /educator
+  const isEducatorRouter = useMatch('/educator/*')
 
   return (
     <div className='text-default min-h-screen bg-white'>
-      {/* means if no educator url found show him navbar */}
-{!isEducatorRouter&& <Navbar />}
+      {/* If user is NOT in educator page */}
+      {!isEducatorRouter && <Navbar />}
       <Routes>
         {/* when user open show HOme */}
         <Route path='/' element={<Home />} />
         {/* Route for all courses  */}
         <Route path='/course-list' element={<CourseList />} />
-     {/* route for seacrhing */}
+        {/* route for seacrhing */}
         <Route path='/course-list/:input' element={<CourseList />} />
         {/* this will show all course details */}
         <Route path='/course/:id' element={<CourseDetails />} />
@@ -40,8 +43,8 @@ const isEducatorRouter=useMatch('/educator/*')
         {/* route for loading */}
         <Route path='/loading/:path' element={<Loading />} />
 
-{/* This is a main layout page */}
-{/* <Outlet /> is a space where child pages appear */}
+        {/* This is a main layout page */}
+        {/* <Outlet /> is a space where child pages appear */}
         <Route path='/educator' element={<Educator />}>
           <Route path='/educator' element={<Dashboard />} />
           <Route path='add-course' element={<AddCourse />} />
