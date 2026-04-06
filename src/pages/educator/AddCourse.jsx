@@ -59,7 +59,7 @@ const AddCourse = () => {
     }
   }
 
-  // ================= LECTURE =================
+
   const handlerLecture = (action, chapterId, lectureIndex) => {
 
     if (action === 'add') {
@@ -77,7 +77,7 @@ const AddCourse = () => {
       setChapter(
         chapter.map(item => {
 
-          // ✅ FIXED VARIABLE NAME
+          //  FIXED VARIABLE NAME
           if (item.chapterId === currentChapterId) {
             return {
               ...item,
@@ -147,26 +147,30 @@ const AddCourse = () => {
       <form onSubmit={handleSubmit} className="w-full max-w-3xl bg-white p-6 rounded-lg border flex flex-col gap-6">
 
         {/* TITLE */}
+        <p>Course Tittle</p>
         <input
           placeholder="Course Title"
           value={courseTitle}
           onChange={e => setCourseTitle(e.target.value)}
-          className="border px-3 py-2 rounded"
+          className="border px-3 py-2 rounded outline-none"
         />
 
         {/* DESCRIPTION */}
+        <p>Course Description</p>
         <div ref={editorRef} className="border min-h-[150px] rounded p-2"></div>
 
         {/* PRICE */}
+        <p>Price</p>
         <input
-          type="number"
+          type="number" placeholder='Course price'
           value={coursePrice}
           onChange={e => setCoursePrice(Number(e.target.value))}
           className="border px-3 py-2 rounded w-32"
         />
 
         {/* DISCOUNT */}
-        <input
+        <p>Discount%</p>
+        <input placeholder='Discount%'
           type="number"
           value={discount}
           onChange={e => setDiscount(Number(e.target.value))}
