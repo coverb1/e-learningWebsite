@@ -1,7 +1,7 @@
 import React from 'react'
 import { dummyEducatorData } from '../../assets/assets';
 import { assets } from '../../assets/assets'
-import { UserButton, useUser } from '@clerk/react';
+import { UserButton, useUser } from '@clerk/clerk-react';
 import { Link } from 'react-router-dom';
 
 const Navbar = () => {

@@ -4,7 +4,7 @@ import './index.css'
 import App from './App.jsx'
 import { AppContextProvider } from './context/Appcontext.jsx'
 import { BrowserRouter } from 'react-router-dom'
-import { ClerkProvider } from '@clerk/react'
+import { ClerkProvider } from '@clerk/clerk-react'
 
 //cleck helps for login and logout secure
 
@@ -18,12 +18,12 @@ if (!PUBLISHABLE_KEY) {
 createRoot(document.getElementById('root')).render(
 
   <StrictMode>
+      <ClerkProvider publishableKey={PUBLISHABLE_KEY} afterSignOutUrl='/'>
     <BrowserRouter>
       <AppContextProvider>
-        <ClerkProvider publishableKey={PUBLISHABLE_KEY} afterSignOutUrl='/'>
           <App />
-        </ClerkProvider>
       </AppContextProvider>
     </BrowserRouter>
+     </ClerkProvider>
   </StrictMode>,
 )

@@ -1,12 +1,13 @@
 import React, { useContext } from 'react'
 import { assets } from '../../assets/assets'
-import { Link } from 'react-router-dom'
-import { useClerk,UserButton,useUser } from '@clerk/react'
+import { Link, useLocation } from 'react-router-dom'
+import { UserButton, useClerk, useUser } from '@clerk/clerk-react'
 import { AppContext } from '../../context/Appcontext'
 
 const Navbar = () => {
 
-  const {navigate,isEducator,setIsEducator}=useContext(AppContext)
+  const {navigate,isEducator}=useContext(AppContext)
+  const location = useLocation()
 
   const{openSignIn}=useClerk()
   const {user}=useUser()
